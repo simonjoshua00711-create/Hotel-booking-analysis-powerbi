@@ -8,7 +8,15 @@ Everything's in `Guided_Project_Simon.pbix`. Open it in Power BI Desktop and cli
 
 No live published Power BI Service link, unfortunately. Couldn't get account/publishing access sorted during this project, so the `.pbix` file is the actual deliverable here.
 
-## Data
+## Introduction
+
+This project looks at hotel booking records from 2018 to 2020 and turns them into a Power BI dashboard a hotel management team could actually use. The work follows the usual flow for a project like this: understand the problem, pull in the data, clean it up, model it properly, then build out the visuals and metrics on top.
+
+## Problem Statement
+
+Hotel management needs a clearer picture of how bookings behave, cancellations in particular, so they can make better calls on pricing, marketing spend, and operations. Right now that picture doesn't exist in a usable form. As the data analyst on this, the job was to take the raw booking records, clean them up, build a proper data model, and surface the metrics and visuals that actually help with those decisions.
+
+## Data Sourcing
 
 Two sources went into this:
 
@@ -16,7 +24,7 @@ Two sources went into this:
 
 **Country Reference Data**, a country/continent/region lookup (ISO-alpha3 codes) from the UN Statistics Division, used to turn the booking data's raw country codes into actual country names.
 
-## Cleaning it up
+## Data Transformation and Cleaning
 
 All done in Power Query:
 
@@ -29,13 +37,11 @@ All done in Power Query:
 7. Merged in the country reference table on the ISO code for real country names.
 8. Found and removed a few broken rows, including one where "hotel" showed up where an actual hotel name should've been. Looked like a stray header row that got pulled in during the append.
 
-Full details are in the data inspection notes.
+## Data Modeling
 
-## Data model
+Went with a simple star schema:
 
-Simple star schema:
-
-**Hotel Dim** holds the two hotel types with a generated ID, built from untouched raw data per the brief.
+**Hotel Dim** holds the two hotel types with a generated ID, built from untouched raw data per the project brief.
 
 **Location Dim** is the cleaned country lookup (code, name, region, continent).
 
@@ -50,6 +56,6 @@ Simple star schema:
 - Ratio of Total Bookings to Total Cancellations
 - Cancellation Rate
 
-## The dashboard
+## The Dashboard
 
 KPI strip up top, then a monthly booking trend line, top 10 countries by bookings, bookings by market segment, and a cancellation split donut. Two slicers, hotel type and country, make it filterable.
